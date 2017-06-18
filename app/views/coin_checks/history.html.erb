@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Coin Checks</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+        <td>transaction id </td>
+        <td>order id </td>
+        <td>fund </td>
+        <td>rate</td>
+        <td>type</td>
+        <td>create</td>
+      </tr>
+  </thead>
+
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction["id"] %></td>
+        <td><%= transaction["order_id"]%></td>
+        <td><%= transaction["funds"]%></td>
+        <td><%= transaction["rate"]%></td>
+        <td><%= transaction["side"]%></td>
+        <td><%= transaction["created_at"]%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

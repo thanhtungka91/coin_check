@@ -1,20 +1,35 @@
 require 'ruby_coincheck_client'
 class CoinChecksController < ApplicationController
   before_action :set_coin_check, only: [:show, :edit, :update, :destroy]
+  $api_key =  ENV["API_KEY"]
+  $api_secret = ENV["API_SECRET"]
 
+  # initial request to coincheck server 
+  def initialize
+    @cc = CoincheckClient.new($api_key, $api_secret)
+  end 
+
+  #home 
   def home 
     # render html: "test"
   end 
+
   # GET /coin_checks
   # GET /coin_checks.json
   def index
-    cc = CoincheckClient.new(ENV["API_KEY"], ENV["API_SCRET"])
-    response = cc.read_orders
+    # cc = CoincheckClient.new($api_key, $api_secret)
+    response = @cc.read_orders
     result = JSON.parse(response.body)
     @orders = result["orders"]
     # @coin_checks = CoinCheck.all
   end
 
+  def history
+    response = @cc.read_transactions
+    result = JSON.parse(response.body)
+    @transactions = result["transactions"]
+    # render html: @transactions
+  end 
   # GET /coin_checks/1
   # GET /coin_checks/1.json
   def show
